@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Maker's Secret Satan</title>
+  <meta name="description" content="Countdown to Maker's Secret Satan — Halloween 2026.">
+  <meta name="theme-color" content="#ffffff">
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" href="logo-mark.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      background: #fff;
+      color: #000;
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      font-weight: 800;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      min-height: 100dvh;
+      overflow: hidden;
+    }
+
+    header {
+      padding: clamp(14px, 2.5vw, 32px);
+      padding-left: max(clamp(14px, 2.5vw, 32px), env(safe-area-inset-left));
+      padding-top: max(clamp(14px, 2.5vw, 32px), env(safe-area-inset-top));
+    }
+
+    .logo {
+      display: block;
+      width: clamp(140px, 18vw, 280px);
+      height: auto;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 0 2vw 4vh;
+    }
+
+    .tagline {
+      margin: 0 0 0.6em;
+      font-size: clamp(22px, 4.5vw, 64px);
+      letter-spacing: -0.01em;
+      text-align: center;
+    }
+
+    .countdown {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: -0.03em;
+    }
+
+    .unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* Desktop / landscape: one row, sized to fill the width
+       but capped by height so it never overflows */
+    .num, .sep {
+      font-size: min(15.5vw, 46vh);
+    }
+
+    .sep {
+      padding: 0 0.02em;
+      transform: translateY(-0.06em);
+    }
+
+    .label {
+      font-size: clamp(11px, 1.6vw, 22px);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-top: 0.4em;
+    }
+
+    /* Portrait / phones: 2×2 grid so the numbers stay huge */
+    @media (max-aspect-ratio: 1/1) {
+      .countdown {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 6vh 6vw;
+      }
+      .sep { display: none; }
+      .tagline { font-size: clamp(22px, 7.5vw, 56px); margin-bottom: 0.8em; }
+      .num { font-size: min(32vw, 22vh); }
+      .label { font-size: clamp(11px, 3.4vw, 18px); }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <a href="./" aria-label="Maker's Secret Satan home">
+      <img class="logo" src="logo.svg" alt="Maker's Secret Satan">
+    </a>
+  </header>
+
+  <main>
+    <p class="tagline">Shenanigans release in...</p>
+    <div class="countdown" role="timer" aria-live="off" aria-label="Countdown to Halloween">
+      <div class="unit"><span class="num" id="d">00</span><span class="label">Days</span></div>
+      <span class="sep">:</span>
+      <div class="unit"><span class="num" id="h">00</span><span class="label">Hours</span></div>
+      <span class="sep">:</span>
+      <div class="unit"><span class="num" id="m">00</span><span class="label">Minutes</span></div>
+      <span class="sep">:</span>
+      <div class="unit"><span class="num" id="s">00</span><span class="label">Seconds</span></div>
+    </div>
+  </main>
+
+  <script>
+    // Midnight at the start of Halloween, Mountain Time (MDT = UTC-6 on Oct 31, 2026).
+    // Everyone sees the same moment regardless of their own time zone.
+    const TARGET = new Date("2026-10-31T00:00:00-06:00").getTime();
+
+    const el = {
+      d: document.getElementById("d"),
+      h: document.getElementById("h"),
+      m: document.getElementById("m"),
+      s: document.getElementById("s"),
+    };
+    const pad = n => String(n).padStart(2, "0");
+
+    function tick() {
+      const diff = Math.max(0, TARGET - Date.now());
+      const total = Math.floor(diff / 1000);
+      el.d.textContent = pad(Math.floor(total / 86400));
+      el.h.textContent = pad(Math.floor(total / 3600) % 24);
+      el.m.textContent = pad(Math.floor(total / 60) % 60);
+      el.s.textContent = pad(total % 60);
+      if (diff === 0) clearInterval(timer);
+    }
+
+    tick();
+    const timer = setInterval(tick, 250);
+  </script>
+</body>
+</html>
