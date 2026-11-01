@@ -4,157 +4,807 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Maker's Secret Satan</title>
-  <meta name="description" content="Countdown to Maker's Secret Satan — Halloween 2026.">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Maker's Secret Satan 2026 — a Halloween gift-exchange ring of YouTube makers. See who cursed whom.">
+  <meta name="theme-color" content="#0f0f0f">
+  <meta name="color-scheme" content="dark">
 
   <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="icon" href="logo-mark.svg" type="image/svg+xml">
+  <link rel="icon" href="pentagram.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
 
   <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #212121;
+      --surface-2: #272727;
+      --surface-3: #3f3f3f;
+      --text: #f1f1f1;
+      --text-2: #aaaaaa;
+      --red: #ff0033;
+      --brand: #ec5858;
+      --gave: #ff3355;
+      --got: #f1f1f1;
+    }
+
     *, *::before, *::after { box-sizing: border-box; }
+    [hidden] { display: none !important; }
 
     html, body {
       margin: 0;
-      height: 100%;
-      background: #fff;
-      color: #000;
-      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
-      font-weight: 800;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Roboto, system-ui, sans-serif;
     }
 
     body {
-      display: flex;
-      flex-direction: column;
       min-height: 100vh;
       min-height: 100dvh;
-      overflow: hidden;
+      overflow-x: hidden;
     }
 
+    /* ---------- Background glow ---------- */
+    .bg-star {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse at center, rgba(255, 0, 51, 0.10) 0%, rgba(15, 15, 15, 0) 55%),
+        var(--bg);
+    }
+
+    /* ---------- Header ---------- */
     header {
-      padding: clamp(14px, 2.5vw, 32px);
-      padding-left: max(clamp(14px, 2.5vw, 32px), env(safe-area-inset-left));
-      padding-top: max(clamp(14px, 2.5vw, 32px), env(safe-area-inset-top));
-    }
-
-    .logo {
-      display: block;
-      width: clamp(140px, 18vw, 280px);
-      height: auto;
-    }
-
-    main {
-      flex: 1;
+      position: relative;
+      z-index: 5;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: center;
-      padding: 0 2vw 4vh;
+      justify-content: space-between;
+      gap: 16px;
+      padding: clamp(14px, 2.5vw, 28px);
+      padding-left: max(clamp(14px, 2.5vw, 28px), env(safe-area-inset-left));
+      padding-right: max(clamp(14px, 2.5vw, 28px), env(safe-area-inset-right));
+      padding-top: max(clamp(14px, 2.5vw, 28px), env(safe-area-inset-top));
     }
-
-    .tagline {
-      margin: 0 0 0.6em;
-      font-size: clamp(22px, 4.5vw, 64px);
-      letter-spacing: -0.01em;
-      text-align: center;
-    }
-
-    .countdown {
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      line-height: 1;
-      font-variant-numeric: tabular-nums;
-      letter-spacing: -0.03em;
-    }
-
-    .unit {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    /* Desktop / landscape: one row, sized to fill the width
-       but capped by height so it never overflows */
-    .num, .sep {
-      font-size: min(15.5vw, 46vh);
-    }
-
-    .sep {
-      padding: 0 0.02em;
-      transform: translateY(-0.06em);
-    }
-
-    .label {
-      font-size: clamp(11px, 1.6vw, 22px);
-      letter-spacing: 0.2em;
+    .brand { display: flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; }
+    .logo-head { display: block; width: clamp(44px, 5vw, 64px); height: auto; }
+    .wordmark {
+      font: 800 clamp(12px, 1.25vw, 16px)/0.95 "Plus Jakarta Sans", system-ui, sans-serif;
       text-transform: uppercase;
-      margin-top: 0.4em;
+      letter-spacing: 0.02em;
     }
 
-    /* Portrait / phones: 2×2 grid so the numbers stay huge */
-    @media (max-aspect-ratio: 1/1) {
-      .countdown {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 6vh 6vw;
-      }
-      .sep { display: none; }
-      .tagline { font-size: clamp(22px, 7.5vw, 56px); margin-bottom: 0.8em; }
-      .num { font-size: min(32vw, 22vh); }
-      .label { font-size: clamp(11px, 3.4vw, 18px); }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      height: 36px;
+      padding: 0 16px;
+      border-radius: 18px;
+      border: 0;
+      background: var(--surface-2);
+      color: var(--text);
+      font: 500 14px/1 Roboto, system-ui, sans-serif;
+      text-decoration: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+    }
+    .pill:hover { background: var(--surface-3); }
+    .pill.light { background: var(--text); color: #0f0f0f; }
+    .pill.light:hover { background: #d9d9d9; }
+    .pill svg { width: 18px; height: 18px; flex: none; }
+
+    /* ---------- Hero ---------- */
+    main { position: relative; z-index: 1; }
+
+
+    .stage {
+      --s: min(94vw, 74vh, 860px);
+      position: relative;
+      width: var(--s);
+      height: var(--s);
+      margin: clamp(4px, 2vh, 20px) auto 0;
+    }
+
+    .web {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+      pointer-events: none;
+    }
+
+    .ring, .star-line {
+      fill: none;
+      stroke: var(--red);
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      transition: stroke-dashoffset 1.6s cubic-bezier(.6, 0, .2, 1);
+    }
+    .ring { stroke-width: 1.5; opacity: 0.55; }
+    .star-line { stroke-width: 1.5; opacity: 0.35; }
+
+    .edge {
+      fill: none;
+      stroke: rgba(255, 51, 85, 0.75);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      transition: stroke-dashoffset 0.9s cubic-bezier(.6, 0, .2, 1), opacity 0.3s, stroke 0.3s, stroke-width 0.3s;
+    }
+    .edge.unconfirmed { stroke-dasharray: 0.02 0.02; }
+    .revealed .ring, .revealed .star-line, .revealed .edge { stroke-dashoffset: 0; }
+
+    .web.focus .edge { opacity: 0.15; }
+    .web.focus .edge.gave { opacity: 1; stroke: var(--gave); stroke-width: 3.5; }
+    .web.focus .edge.got  { opacity: 1; stroke: var(--got);  stroke-width: 3.5; }
+
+    .head {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 40%;
+      transform: translate(-50%, -56%);
+      transition: width 1.2s cubic-bezier(.6, 0, .2, 1), transform 1.2s cubic-bezier(.6, 0, .2, 1), filter 0.4s;
+      filter: drop-shadow(0 0 30px rgba(255, 0, 51, 0.35));
+      pointer-events: none;
+      user-select: none;
+      z-index: 2;
+    }
+    .revealed .head { width: 28%; transform: translate(-50%, -50%); }
+
+    .reveal-btn {
+      position: absolute;
+      left: 50%;
+      top: calc(50% + 17%);
+      transform: translateX(-50%);
+      z-index: 6;
+      padding: 10px 26px;
+      border: 2px solid var(--red);
+      border-radius: 999px;
+      background: rgba(15, 15, 15, 0.85);
+      color: var(--text);
+      font: 800 clamp(16px, 2.4vw, 24px)/1 "Plus Jakarta Sans", system-ui, sans-serif;
+      letter-spacing: 0.32em;
+      text-indent: 0.32em;
+      cursor: pointer;
+      animation: throb 2.4s ease-in-out infinite;
+      transition: opacity 0.4s, transform 0.4s, background 0.2s;
+    }
+    .reveal-btn:hover { background: var(--red); }
+    .reveal-btn:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
+    @keyframes throb {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255, 0, 51, 0.55); }
+      50%      { box-shadow: 0 0 28px 6px rgba(255, 0, 51, 0.35); }
+    }
+    .revealed .reveal-btn { opacity: 0; pointer-events: none; transform: translateX(-50%) scale(0.8); }
+
+    /* Creator bubbles */
+    .creator {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: var(--d, 64px);
+      height: var(--d, 64px);
+      margin: 0;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: var(--surface);
+      cursor: pointer;
+      z-index: 3;
+      will-change: transform;
+    }
+    .creator img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: 0 0 0 2px var(--bg), 0 0 0 3px rgba(255, 255, 255, 0.25);
+      transition: box-shadow 0.2s, filter 0.3s;
+    }
+    .creator:hover img, .creator:focus-visible img {
+      box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--red), 0 0 24px rgba(255, 0, 51, 0.6);
+    }
+    .creator:focus-visible { outline: none; }
+    .creator.selected img {
+      box-shadow: 0 0 0 3px var(--bg), 0 0 0 6px var(--red), 0 0 34px rgba(255, 0, 51, 0.8);
+    }
+    .creator.pending img { filter: grayscale(1) brightness(0.7); }
+
+    .creator .name {
+      position: absolute;
+      left: 50%;
+      top: calc(100% + 6px);
+      transform: translateX(-50%);
+      padding: 3px 8px;
+      border-radius: 6px;
+      background: rgba(15, 15, 15, 0.85);
+      color: var(--text);
+      font: 500 12px/1.2 Roboto, system-ui, sans-serif;
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .creator:hover .name, .creator:focus-visible .name { opacity: 1; }
+    @media (min-width: 720px) {
+      .revealed .creator .name { opacity: 1; transition-delay: 0.9s; }
+    }
+    .revealed .creator:hover .name { transition-delay: 0s; }
+
+    .moving .creator { transition: transform 1.3s cubic-bezier(.6, 0, .2, 1), width 1.3s cubic-bezier(.6, 0, .2, 1), height 1.3s cubic-bezier(.6, 0, .2, 1); }
+
+
+    /* ---------- Viewer ---------- */
+    .viewer {
+      position: relative;
+      z-index: 4;
+      width: min(100% - 32px, 1100px);
+      margin: clamp(56px, 9vh, 110px) auto 64px;
+      scroll-margin-top: 16px;
+    }
+    .viewer[hidden] { display: none; }
+
+    .player {
+      position: relative;
+      width: min(100%, calc((100dvh - 240px) * 16 / 9));
+      margin: 0 auto;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #000;
+    }
+    .player.short {
+      width: min(100%, 420px);
+      aspect-ratio: 9 / 16;
+      max-height: 82vh;
+      margin: 0 auto;
+    }
+    .player iframe { display: block; width: 100%; height: 100%; border: 0; }
+    .player.ig { background: #fff; }
+    .parts { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+    .parts:empty { display: none; }
+    .parts .pill[aria-selected="true"] { background: var(--text); color: #0f0f0f; }
+    .player .thumb { position: absolute; inset: 0; display: block; color: var(--text); text-decoration: none; }
+    .player .thumb img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; }
+    .player .thumb .play {
+      position: absolute; left: 50%; top: 50%; width: 68px; height: 48px; transform: translate(-50%, -50%);
+      border-radius: 14px; background: var(--red);
+    }
+    .player .thumb .play::after {
+      content: ""; position: absolute; left: 27px; top: 14px;
+      border-left: 18px solid #fff; border-top: 10px solid transparent; border-bottom: 10px solid transparent;
+    }
+    .player .thumb .note {
+      position: absolute; left: 12px; right: 12px; bottom: 12px; padding: 8px 12px; border-radius: 8px;
+      background: rgba(15, 15, 15, 0.85); color: var(--text-2); font-size: 13px; text-align: center;
+    }
+    .player .empty {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 24px;
+      text-align: center;
+      color: var(--text-2);
+      background:
+        radial-gradient(circle at center, rgba(255, 0, 51, 0.12), transparent 60%),
+        #000;
+    }
+    .player .empty strong {
+      color: var(--text);
+      font: 800 clamp(18px, 2.6vw, 28px)/1.2 "Plus Jakarta Sans", system-ui, sans-serif;
+    }
+
+    .vid-title {
+      margin: 14px 0 0;
+      font: 700 clamp(17px, 2vw, 20px)/1.35 Roboto, system-ui, sans-serif;
+    }
+
+    .channel-row {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    .channel-row img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+    .channel-meta { display: flex; flex-direction: column; margin-right: 8px; min-width: 0; }
+    .channel-meta b { font-weight: 500; font-size: 16px; }
+    .channel-meta small { color: var(--text-2); font-size: 12px; }
+
+    .loop-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .loop-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      padding: 12px 16px;
+      border: 0;
+      border-radius: 12px;
+      background: var(--surface-2);
+      color: var(--text);
+      text-align: left;
+      cursor: pointer;
+      font: inherit;
+      transition: background 0.15s, box-shadow 0.15s;
+    }
+    .loop-btn:hover { background: var(--surface-3); }
+    .loop-btn:disabled { cursor: default; opacity: 0.55; }
+    .loop-btn:disabled:hover { background: var(--surface-2); }
+    .loop-btn .q { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--surface-3); color: var(--text-2); font-weight: 700; flex: none; }
+    .loop-btn.got  { box-shadow: inset 4px 0 0 var(--got); }
+    .loop-btn.gave { box-shadow: inset -4px 0 0 var(--gave); justify-content: flex-end; text-align: right; }
+    .loop-btn img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; flex: none; }
+    .loop-btn .txt { display: flex; flex-direction: column; min-width: 0; }
+    .loop-btn small { color: var(--text-2); font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; }
+    .loop-btn b { font-weight: 500; font-size: 15px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .loop-btn .arrow { font-size: 20px; color: var(--text-2); flex: none; }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      padding: 24px 16px 40px;
+      text-align: center;
+      color: var(--text-2);
+      font-size: 13px;
+    }
+    footer a { color: var(--text); }
+
+    @media (max-width: 560px) {
+      .loop-nav { grid-template-columns: 1fr; }
+      .pill .hide-sm { display: none; }
+      .creator .name { font-size: 10px; padding: 2px 5px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-btn { animation: none; }
     }
   </style>
 </head>
 <body>
+  <div class="bg-star" aria-hidden="true">
+  </div>
+
   <header>
-    <a href="./" aria-label="Maker's Secret Satan home">
-      <img class="logo" src="logo.svg" alt="Maker's Secret Satan">
+    <a class="brand" href="./" aria-label="Maker's Secret Satan home">
+      <img class="logo-head" src="satan-head.png" alt="">
+      <span class="wordmark">Makers<br>Secret<br>Satan</span>
+    </a>
+    <a class="pill" href="https://www.youtube.com/playlist?list=PLQ7OvLVQ033c" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.6 7.2a2.5 2.5 0 0 0-1.8-1.8C18.2 5 12 5 12 5s-6.2 0-7.8.4A2.5 2.5 0 0 0 2.4 7.2 26 26 0 0 0 2 12a26 26 0 0 0 .4 4.8 2.5 2.5 0 0 0 1.8 1.8C5.8 19 12 19 12 19s6.2 0 7.8-.4a2.5 2.5 0 0 0 1.8-1.8A26 26 0 0 0 22 12a26 26 0 0 0-.4-4.8zM10 15V9l5.2 3L10 15z"/></svg>
+      <span>Watch <span class="hide-sm">the playlist</span></span>
     </a>
   </header>
 
   <main>
-    <p class="tagline">Shenanigans release in...</p>
-    <div class="countdown" role="timer" aria-live="off" aria-label="Countdown to Halloween">
-      <div class="unit"><span class="num" id="d">00</span><span class="label">Days</span></div>
-      <span class="sep">:</span>
-      <div class="unit"><span class="num" id="h">00</span><span class="label">Hours</span></div>
-      <span class="sep">:</span>
-      <div class="unit"><span class="num" id="m">00</span><span class="label">Minutes</span></div>
-      <span class="sep">:</span>
-      <div class="unit"><span class="num" id="s">00</span><span class="label">Seconds</span></div>
+    <div class="stage" id="stage">
+      <svg class="web" id="web" aria-hidden="true">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+            <path d="M0 0L10 5L0 10z" fill="rgba(255,51,85,.85)"/>
+          </marker>
+          <marker id="ah-gave" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+            <path d="M0 0L10 5L0 10z" fill="#ff3355"/>
+          </marker>
+          <marker id="ah-got" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="10" markerHeight="10" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+            <path d="M0 0L10 5L0 10z" fill="#f1f1f1"/>
+          </marker>
+        </defs>
+        <g id="decor"></g>
+        <g id="edges"></g>
+      </svg>
+      <img class="head" src="satan-head.png" alt="Maker's Secret Satan goat in a Santa hat">
+      <button class="reveal-btn" id="revealBtn" type="button">REVEAL</button>
     </div>
+
+    <section class="viewer" id="viewer" hidden aria-live="polite">
+      <div class="parts" id="parts" role="tablist" aria-label="Video parts"></div>
+      <div class="player" id="player"></div>
+      <h2 class="vid-title" id="vidTitle"></h2>
+      <div class="channel-row">
+        <img id="chAvatar" alt="" referrerpolicy="no-referrer">
+        <div class="channel-meta">
+          <b id="chName"></b>
+          <small id="chHandle"></small>
+        </div>
+        <a class="pill light" id="chLink" target="_blank" rel="noopener">Visit channel</a>
+        <a class="pill" id="ytLink" target="_blank" rel="noopener">Open on YouTube</a>
+      </div>
+      <nav class="loop-nav" aria-label="Explore the loop">
+        <button class="loop-btn got" id="fromBtn" type="button">
+          <span class="arrow" aria-hidden="true">←</span>
+          <img alt="" referrerpolicy="no-referrer">
+          <span class="txt"><small>Gifted by</small><b></b></span>
+        </button>
+        <button class="loop-btn gave" id="toBtn" type="button">
+          <span class="txt"><small>Made a gift for</small><b></b></span>
+          <img alt="" referrerpolicy="no-referrer">
+          <span class="arrow" aria-hidden="true">→</span>
+        </button>
+      </nav>
+    </section>
   </main>
 
+  <footer>
+    Maker's Secret Satan 2026 · hosted by <a href="https://www.youtube.com/@KeithSachs" target="_blank" rel="noopener">Keith Sachs</a> &amp; <a href="https://www.youtube.com/@MISTER.INDUSTRIES" target="_blank" rel="noopener">MR. INDUSTRIES</a>
+  </footer>
+
   <script>
-    // Midnight at the start of Halloween, Mountain Time (MDT = UTC-6 on Oct 31, 2026).
-    // Everyone sees the same moment regardless of their own time zone.
-    const TARGET = new Date("2026-10-31T00:00:00-06:00").getTime();
+    // ------------------------------------------------------------------
+    //  THE RING. Each creator points at who they made a gift for (giftTo).
+    //  "Gifted by" is worked out automatically. Set video to a YouTube id
+    //  when someone's video goes live. giftTo: null = not known yet.
+    //  unconfirmed: true draws that arrow dashed.
+    // ------------------------------------------------------------------
+    const AV = "=s176-c-k-c0x00ffffff-no-rj";
+    const CREATORS = [
+      { id: "keith",      name: "Keith Sachs",        handle: "@KeithSachs",        avatar: "https://yt3.ggpht.com/VQ20iDgktEz9PVF-8SAKQYXPqbwUcg1gy2B8VGsMec3fB_Mue16OEL5WB37fwElX2GQuSUxt" + AV,
+        video: "1NG2rYAJrEo", title: "A New Halloween Tradition; The First Makers Secret Satan", giftTo: "methodical" },
+      { id: "methodical", name: "Methodical Maker",   handle: "@MethodicalMaker",   avatar: "https://yt3.ggpht.com/_nG4VeECMq4oHMN69JCqgH-1B61KCAPzWUI5usHdDCOqEtKg4VqJqGZM5ISK34JEqI85pP98xtY" + AV,
+        video: "l8lV9QrzB3Y", title: "I Built A Haunted Halloween Camera!", giftTo: "kite" },
+      { id: "kite",       name: "Mr. Kite",           handle: "@TheMrKite",         avatar: "https://yt3.ggpht.com/NbVO3NcSXCEj13KcheJ_6KpDqwacU5kGdfGza1ZZ26VTbZOQuyixgmJWkMSrNsQJ2g8CYtgZ8tc" + AV,
+        video: "UCYcZpI6knM", title: "I Made a Cursed Fish for a Youtuber!", giftTo: "chromalock" },
+      { id: "chromalock", name: "ChromaLock",         handle: "@ChromaLock",        avatar: "https://yt3.ggpht.com/q8yyCfUxP27C-HZLi_jjvP0LQeMwVBvPdD8o3Y6vpVwSGase9igyO6lBf5I3QaYT3eHOCWfX" + AV,
+        video: "qURoHPyMz0Y", title: "Building a Pedal to Punish Bassists", giftTo: "sam" },
+      { id: "sam",        name: "Sam Makes",          handle: "@SamMakes",          avatar: "https://yt3.ggpht.com/p6BcV4Uy6IxscQeDvYEzhgDwgJ0HIqhHBHIEhFOy0Qaokm6BcQ8RkUIOC9MQZ1ijvDXevT_hLg" + AV,
+        video: "DWFvvQItvhg", title: "I Made The Scariest Cuckoo Clock", giftTo: "mr" },
+      { id: "mr",         name: "MR. INDUSTRIES",     handle: "@MISTER.INDUSTRIES", avatar: "https://yt3.ggpht.com/y7VhEm2bSrTbSehE_rdPukfl5eAypQkGzbD6iSnWS2Q2hl1ESXpeK_8CZy5r-PseavH5eP6m" + AV,
+        video: "5p36WykiHu4", short: true, title: "Makers Secret Satan - Taco Bell Burrito Launcher", giftTo: "keith" },
 
-    const el = {
-      d: document.getElementById("d"),
-      h: document.getElementById("h"),
-      m: document.getElementById("m"),
-      s: document.getElementById("s"),
-    };
-    const pad = n => String(n).padStart(2, "0");
+      // Second ring.
+      { id: "sah",        name: "Science After Hours", handle: "@ScienceAfterHours", avatar: "https://yt3.googleusercontent.com/PAxpElHWdBXILITnA852JnTO0MtPOl93dXCerMJFqqZKK2P1OQtqFbMV6mpCIPCavK94xXkk6Q" + AV,
+        video: null, giftTo: "billarium" },
+      { id: "billarium",  name: "Billarium",          handle: "@Billarium",         avatar: "https://yt3.ggpht.com/o24cJ_EyWNA8knPn4lHx6vXAdOvqg9Y_kHFM2rJjAr63rMuPysYQh1f_2bgfSQ6jMy0mxVBw" + AV,
+        video: "Y2IcnPxL8FA", title: "I made a literal Monster Truck", giftTo: "tom" },
+      { id: "tom",        name: "tom builds stuff",   handle: "@tylon22",           avatar: "https://yt3.ggpht.com/Zx7lIqGFbBd_BCgHLGGVaueK1Ga40Xn9Lp2BwXcs-lnRA6sGkKQo0YnIeqNQQZKXR6FCRYshHA" + AV,
+        video: "neQLgBfpT6M", title: "Utility Knives, But Wrong", giftTo: "wareabouts" },
+      { id: "wareabouts", name: "wareabouts",         handle: "@wareabouts",        avatar: "https://yt3.googleusercontent.com/s0ufGqy3fQ1hWoEUY72TOTeid_DLAvYXceSJ1I6v2rUnT1rC7ikfk7S-zzujaDZBVbk8X0y7OA" + AV,
+        giftTo: "petr",
+        parts: [
+          { label: "His build", yt: "U2maHJbHU7I", short: true, title: "Gaslight(ning) in a Box(tlle)" },
+          { label: "His gift from tom", yt: "APXg2jPiRnY", short: true, title: "Opening a box from Tom Builds Stuff (tylon22)" },
+        ] },
+      { id: "petr",       name: "Peter Tran",         handle: "@PeTr01",            avatar: "https://yt3.googleusercontent.com/ZxHGQDJsjLxe0i4VlHIAVkBDXsfFOLW2mBVHMWOb6smfUBueqyMgWU_DM6HZ8zk5LJI51yI9RO8" + AV,
+        giftTo: "novelty",
+        parts: [
+          { label: "His build", yt: "3uglAzA64z0", short: true, title: "I taught my Pokemon Razor Leaf!" },
+          { label: "Puzzle box pt. 1", yt: "mryRQXT9tg8", short: true, title: "My friend made me a puzzle box - P.1" },
+          { label: "Puzzle box pt. 2", yt: "TFQcTQNcWW8", short: true, title: "My friend made me an insane puzzle box - P.2" },
+        ] },
 
-    function tick() {
-      const diff = Math.max(0, TARGET - Date.now());
-      const total = Math.floor(diff / 1000);
-      el.d.textContent = pad(Math.floor(total / 86400));
-      el.h.textContent = pad(Math.floor(total / 3600) % 24);
-      el.m.textContent = pad(Math.floor(total / 60) % 60);
-      el.s.textContent = pad(total % 60);
-      if (diff === 0) clearInterval(timer);
+      { id: "novelty",    name: "I Create Novelty",   handle: "@icreatenovelty",    avatar: "https://yt3.googleusercontent.com/a5UukVZ5PP5f6mW3oLyMbN1pJy3XHDjTvb_h3_-5BSq2jIchJpSkNnvBibBCuI5kNuYweug5NA" + AV,
+        video: null, giftTo: "sah" },
+    ];
+
+    // ------------------------------------------------------------------
+    // Every creator gets a parts list. A single video is just one part.
+    CREATORS.forEach(c => {
+      if (!c.parts) c.parts = c.video ? [{ yt: c.video, short: !!c.short }] : [];
+    });
+    const byId = Object.fromEntries(CREATORS.map(c => [c.id, c]));
+    CREATORS.forEach(c => { if (byId[c.giftTo]) byId[c.giftTo].giftFrom = c.id; });
+
+    const stage = document.getElementById("stage");
+    const web = document.getElementById("web");
+    const decor = document.getElementById("decor");
+    const edgesG = document.getElementById("edges");
+    const revealBtn = document.getElementById("revealBtn");
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const SVGNS = "http://www.w3.org/2000/svg";
+
+    // ---------- Orbit setup ----------
+    const rand = (seed => () => (seed = (seed * 16807) % 2147483647) / 2147483647)(666);
+    const N = CREATORS.length;
+    CREATORS.forEach((c, i) => {
+      c.orbit = {
+        r: 0.36 + rand() * 0.11,                    // radius as fraction of stage
+        size: 0.075 + rand() * 0.06,                // diameter as fraction of stage
+        phase: (i / N) * Math.PI * 2 + rand() * 0.4,
+        speed: (0.045 + rand() * 0.03) * (reduceMotion ? 0.15 : 1), // rad/s
+        bob: rand() * Math.PI * 2,
+      };
+    });
+
+    // ---------- Reveal layout: walk each gift loop, place along a star polygon ----------
+    function layoutOrder() {
+      const seen = new Set(), cycles = [];
+      // start chains from their first giver so they stay in one piece, then closed loops
+      [...CREATORS.filter(c => !c.giftFrom), ...CREATORS.filter(c => c.giftFrom)].forEach(c => {
+        if (seen.has(c.id)) return;
+        const cyc = [];
+        let cur = c;
+        while (cur && !seen.has(cur.id)) { seen.add(cur.id); cyc.push(cur); cur = byId[cur.giftTo]; }
+        cycles.push(cyc);
+      });
+      cycles.sort((a, b) => b.length - a.length);
+      const seq = cycles.flat();
+      // Place everyone so each gift arrow jumps as far across the circle as possible.
+      // Search for the largest "minimum jump" that works for every arrow, then among those
+      // layouts keep the one with the longest arrows overall.
+      const idx = new Map(seq.map((c, i) => [c, i]));
+      const links = seq.map(c => [byId[c.giftTo], byId[c.giftFrom]].filter(Boolean).map(x => idx.get(x)));
+      const jump = (a, b) => { const d = Math.abs(a - b) % N; return Math.min(d, N - d); };
+
+      function search(minJump, budget) {
+        const slot = new Array(N).fill(-1), used = new Array(N).fill(false);
+        let best = null, bestScore = -1, nodes = 0;
+        (function bt(t, score) {
+          if (++nodes > budget) return;
+          if (t === N) { if (score > bestScore) { bestScore = score; best = slot.slice(); } return; }
+          for (let sl = 0; sl < N; sl++) {
+            if (used[sl] || (t === 0 && sl !== 0)) continue;
+            let add = 0, ok = true;
+            for (const j of links[t]) {
+              if (slot[j] < 0) continue;
+              const d = jump(sl, slot[j]);
+              if (d < minJump) { ok = false; break; }
+              add += d;
+            }
+            if (!ok) continue;
+            used[sl] = true; slot[t] = sl;
+            bt(t + 1, score + add);
+            used[sl] = false; slot[t] = -1;
+          }
+        })(0, 0);
+        return best;
+      }
+
+      let slots = null;
+      for (let m = Math.floor(N / 2); m >= 1 && !slots; m--) slots = search(m, 60000);
+      if (!slots) slots = seq.map((_, i) => i);
+      seq.forEach((c, i) => { c.slot = slots[i]; });
+    }
+    layoutOrder();
+
+    // ---------- Build DOM ----------
+    CREATORS.forEach(c => {
+      const b = document.createElement("button");
+      b.className = "creator" + (c.parts.length ? "" : " pending");
+      b.type = "button";
+      b.setAttribute("aria-label", c.name + (c.parts.length ? " — watch their video" : " — video coming soon"));
+      b.innerHTML = `<img src="${c.avatar}" alt="" loading="lazy" referrerpolicy="no-referrer"><span class="name">${c.name}</span>`;
+      b.addEventListener("click", () => select(c.id, true));
+      stage.appendChild(b);
+      c.el = b;
+    });
+
+    // ---------- Positioning ----------
+    let S = stage.clientWidth;
+    let revealed = false;
+    let selected = null;
+
+    function place(c, x, y, d) {
+      c.el.style.setProperty("--d", d + "px");
+      c.el.style.transform = `translate(${x - d / 2}px, ${y - d / 2}px)`;
+      c.pos = { x, y, d };
     }
 
-    tick();
-    const timer = setInterval(tick, 250);
+    function revealTargets() {
+      const R = S * 0.41, d = Math.max(40, S * (N > 8 ? 0.105 : 0.13));
+      CREATORS.forEach(c => {
+        const a = -Math.PI / 2 + (c.slot / N) * Math.PI * 2;
+        c.target = { x: S / 2 + R * Math.cos(a), y: S / 2 + R * Math.sin(a), d };
+      });
+      return { R, d };
+    }
+
+    function frame(t) {
+      if (!revealed) {
+        const s = t / 1000;
+        CREATORS.forEach(c => {
+          const o = c.orbit;
+          const a = o.phase + s * o.speed;
+          const r = S * o.r + Math.sin(s * 0.6 + o.bob) * S * 0.008;
+          const d = Math.max(30, S * o.size);
+          place(c, S / 2 + r * Math.cos(a), S / 2 + r * Math.sin(a), d);
+        });
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+
+    // ---------- Draw the web ----------
+    function drawWeb() {
+      const { R, d } = revealTargets();
+      web.setAttribute("viewBox", `0 0 ${S} ${S}`);
+      decor.innerHTML = "";
+      edgesG.innerHTML = "";
+
+      const ring = document.createElementNS(SVGNS, "circle");
+      ring.setAttribute("cx", S / 2); ring.setAttribute("cy", S / 2); ring.setAttribute("r", R);
+      ring.setAttribute("pathLength", "1"); ring.setAttribute("class", "ring");
+      decor.appendChild(ring);
+
+      // decorative pentagram inscribed in the ring
+      const pts = [];
+      for (let i = 0; i < 5; i++) {
+        const a = -Math.PI / 2 + i * (4 * Math.PI / 5);
+        pts.push(`${S / 2 + R * 0.86 * Math.cos(a)},${S / 2 + R * 0.86 * Math.sin(a)}`);
+      }
+      const star = document.createElementNS(SVGNS, "polygon");
+      star.setAttribute("points", pts.join(" "));
+      star.setAttribute("pathLength", "1"); star.setAttribute("class", "star-line");
+      star.style.transitionDelay = "0.3s";
+      decor.appendChild(star);
+
+      // gift arrows: giver -> recipient
+      CREATORS.forEach((c, i) => {
+        const to = byId[c.giftTo];
+        if (!to) return;
+        const p1 = c.target, p2 = to.target;
+        const dx = p2.x - p1.x, dy = p2.y - p1.y, len = Math.hypot(dx, dy);
+        const nx = -dy / len, ny = dx / len;
+        const bend = len * 0.03;   // tiny bend so arrows read as a star, not a tangle
+        const cx = (p1.x + p2.x) / 2 + nx * bend, cy = (p1.y + p2.y) / 2 + ny * bend;
+        const pad = d / 2 + 8;
+        const trim = (p, toward) => {
+          const vx = toward.x - p.x, vy = toward.y - p.y, l = Math.hypot(vx, vy);
+          return { x: p.x + vx / l * pad, y: p.y + vy / l * pad };
+        };
+        const a = trim(p1, { x: cx, y: cy }), b = trim(p2, { x: cx, y: cy });
+        const path = document.createElementNS(SVGNS, "path");
+        path.setAttribute("d", `M${a.x},${a.y} Q${cx},${cy} ${b.x},${b.y}`);
+        path.setAttribute("pathLength", "1");
+        path.setAttribute("class", "edge" + (c.unconfirmed ? " unconfirmed" : ""));
+        path.setAttribute("marker-end", "url(#ah)");
+        path.dataset.from = c.id;
+        path.dataset.to = to.id;
+        path.style.transitionDelay = (0.9 + i * 0.12) + "s, 0s, 0s, 0s";
+        edgesG.appendChild(path);
+      });
+      highlight();
+    }
+
+    function highlight() {
+      const on = revealed && selected;
+      web.classList.toggle("focus", !!on);
+      edgesG.querySelectorAll(".edge").forEach(p => {
+        const gave = on && p.dataset.from === selected;
+        const got = on && p.dataset.to === selected;
+        p.classList.toggle("gave", gave);
+        p.classList.toggle("got", got);
+        p.setAttribute("marker-end", gave ? "url(#ah-gave)" : got ? "url(#ah-got)" : "url(#ah)");
+      });
+    }
+
+    // ---------- Reveal ----------
+    function doReveal(instant) {
+      if (revealed) return;
+      revealed = true;
+      revealTargets();
+      if (!instant) stage.classList.add("moving");
+      CREATORS.forEach(c => place(c, c.target.x, c.target.y, c.target.d));
+      drawWeb();
+      // let the layout settle before the lines draw
+      requestAnimationFrame(() => requestAnimationFrame(() => {
+        stage.classList.add("revealed");
+        document.body.classList.add("is-revealed");
+      }));
+      setTimeout(() => stage.classList.remove("moving"), 1500);
+    }
+    revealBtn.addEventListener("click", () => doReveal(false));
+
+    // ---------- Viewer ----------
+    const viewer = document.getElementById("viewer");
+    const player = document.getElementById("player");
+
+    function fillLoopBtn(btn, c) {
+      const img = btn.querySelector("img");
+      let q = btn.querySelector(".q");
+      if (!q) { q = document.createElement("span"); q.className = "q"; q.textContent = "?"; img.after(q); }
+      btn.disabled = !c;
+      img.hidden = !c;
+      if (c) img.src = c.avatar;
+      q.hidden = !!c;
+      btn.querySelector("b").textContent = c ? c.name : "Unknown… for now";
+      btn.onclick = c ? () => select(c.id, true) : null;
+    }
+
+    function partUrl(pt) {
+      if (pt.ig) return `https://www.instagram.com/reel/${pt.ig}/`;
+      return pt.short ? `https://www.youtube.com/shorts/${pt.yt}` : `https://www.youtube.com/watch?v=${pt.yt}`;
+    }
+
+    function showPart(c, i, autoplay) {
+      const pt = c.parts[i];
+      const url = partUrl(pt);
+      document.querySelectorAll("#parts .pill").forEach((t, j) => t.setAttribute("aria-selected", j === i));
+      player.className = "player" + (pt.short || pt.ig ? " short" : "") + (pt.ig ? " ig" : "");
+      const title = pt.title || ((c.title || "") + (c.parts.length > 1 ? ` (${pt.label || "Part " + (i + 1)})` : ""));
+      if (pt.ig) {
+        player.innerHTML = `<iframe src="https://www.instagram.com/reel/${pt.ig}/embed/" title="${title.replace(/"/g, "&quot;")}" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowfullscreen scrolling="no"></iframe>`;
+      } else if (location.protocol === "file:") {
+        // YouTube refuses embeds with no referrer (Error 153), which is always the case for file:// pages.
+        player.innerHTML = `<a class="thumb" href="${url}" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/${pt.yt}/hqdefault.jpg" alt=""><span class="play" aria-hidden="true"></span><span class="note">Opened from disk, so YouTube won't embed. Click to watch, or serve the folder over http.</span></a>`;
+      } else {
+        const origin = encodeURIComponent(location.origin);
+        player.innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${pt.yt}?rel=0&playsinline=1&autoplay=${autoplay ? 1 : 0}&origin=${origin}&widget_referrer=${encodeURIComponent(location.href)}" title="${title.replace(/"/g, "&quot;")}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>`;
+      }
+      document.getElementById("vidTitle").textContent = title;
+      const yt = document.getElementById("ytLink");
+      yt.hidden = false;
+      yt.href = url;
+      yt.textContent = pt.ig ? "Open on Instagram" : "Open on YouTube";
+    }
+
+    function select(id, userAction) {
+      const c = byId[id];
+      if (!c) return;
+      selected = id;
+      CREATORS.forEach(x => x.el.classList.toggle("selected", x.id === id));
+      highlight();
+
+      const partsEl = document.getElementById("parts");
+      partsEl.innerHTML = "";
+      if (c.parts.length > 1) {
+        c.parts.forEach((pt, i) => {
+          const t = document.createElement("button");
+          t.type = "button";
+          t.className = "pill";
+          t.setAttribute("role", "tab");
+          t.textContent = pt.label || "Part " + (i + 1);
+          t.onclick = () => showPart(c, i, true);
+          partsEl.appendChild(t);
+        });
+      }
+      if (c.parts.length) showPart(c, 0, userAction);
+      else {
+        player.className = "player";
+        player.innerHTML = `<div class="empty"><strong>${c.name}'s curse is still brewing…</strong><span>Their video isn't out yet. Check their channel soon.</span></div>`;
+        document.getElementById("vidTitle").textContent = "Video coming soon";
+        document.getElementById("ytLink").hidden = true;
+      }
+      document.getElementById("chAvatar").src = c.avatar;
+      document.getElementById("chName").textContent = c.name;
+      document.getElementById("chHandle").textContent = c.handle;
+      const chUrl = "https://www.youtube.com/" + c.handle;
+      document.getElementById("chLink").href = chUrl;
+
+      fillLoopBtn(document.getElementById("fromBtn"), byId[c.giftFrom]);
+      fillLoopBtn(document.getElementById("toBtn"), byId[c.giftTo]);
+
+      viewer.hidden = false;
+      if (history.replaceState) history.replaceState(null, "", "#" + id);
+      if (userAction) viewer.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+    }
+
+    // ---------- Resize ----------
+    let rz;
+    addEventListener("resize", () => {
+      clearTimeout(rz);
+      rz = setTimeout(() => {
+        S = stage.clientWidth;
+        if (revealed) {
+          revealTargets();
+          CREATORS.forEach(c => place(c, c.target.x, c.target.y, c.target.d));
+          drawWeb();
+        }
+      }, 80);
+    });
+
+    // ---------- Deep link (#creator-id) ----------
+    const hash = location.hash.slice(1);
+    if (byId[hash]) { doReveal(true); select(hash, false); }
   </script>
 </body>
 </html>
